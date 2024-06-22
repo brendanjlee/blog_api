@@ -1,15 +1,14 @@
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
-import connectDB from "./config/database";
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/database");
 
 const app = express();
 
-// connect to db
-connectDB();
-
 // set up middlewares
 app.use(cors());
+
+// connect to database
+connectDB();
 
 const PORT = 3003;
 
