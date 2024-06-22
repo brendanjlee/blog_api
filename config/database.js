@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// const UserModel = require("../models/User");
-// const PostModel = require("../models/Post");
-// const CommentModel = require("../models/Comment");
-
 mongoose.set("strictQuery", false);
 const mongoURI =
   process.env.NODE_ENV === "dev"
@@ -14,7 +10,7 @@ const mongoURI =
 const connectDB = async () => {
   try {
     await mongoose.connect(mongoURI);
-    console.log("Connected to DB: " + mongoURI);
+    console.log("Connected to DB in ENV: " + process.env.NODE_ENV);
   } catch (err) {
     console.error("Problem connecting to database: " + err);
     process.exit(1);
