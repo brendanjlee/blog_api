@@ -2,14 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/database");
 const routes = require("./routes/routes");
-
-require("./config/passport"); // import strategy
+const passport = require("passport");
 
 const app = express();
 
 // set up middlewares
 app.use(cors());
 app.use(express.json());
+
+require("./config/passport");
+
+// This will initialize the passport object on every request
+app.use(passport.initialize());
 
 // connect to database
 connectDB();
