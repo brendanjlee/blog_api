@@ -16,17 +16,17 @@ exports.signup = asyncHanlder(async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { username, email, password } = req.body;
-
-  // check if username or email exists
-  if (await dupCheck(username, email)) {
-    return res
-      .status(400)
-      .json({ message: "Username or email already exists" });
-  }
-
-  // create new user
   try {
+    const { username, email, password } = req.body;
+
+    // check if username or email exists
+    if (await dupCheck(username, email)) {
+      return res
+        .status(400)
+        .json({ message: "Username or email already exists" });
+    }
+
+    // create new user
     const { salt, hash } = await hashPassword(password);
     const newUser = await createUser(username, email, salt, hash);
     res.status(201).json({ success: true, user: newUser });
