@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
+const { authenticateJWT } = require("../middleware/authMiddleware");
+const { postValidation } = require("../utils/validations");
+
 const {
   getAllPosts,
-  getPost,
+  getPostById,
   createPost,
   updatePost,
   deletePost,
@@ -19,13 +22,13 @@ const {
 // Post Routes
 router.get("/", getAllPosts);
 
-router.get("/:postId", getPost);
+router.get("/:postId", getPostById);
 
-router.post("/", createPost);
+router.post("/", authenticateJWT, postValidation, createPost);
 
-router.put("/:postId", updatePost);
+router.put("/:postId", authenticateJWT, postValidation, updatePost);
 
-router.delete("/:postId", deletePost);
+router.delete("/:postId", authenticateJWT, deletePost);
 
 // Comment Routes
 router.get("/:postId/comments", getAllComments);

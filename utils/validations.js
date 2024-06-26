@@ -21,7 +21,16 @@ const loginValidation = [
   }),
 ];
 
+const postValidation = [
+  body("title", "Title cannot be empty").trim().isLength({ min: 1 }).escape(),
+  body("content", "Content cannot be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+];
+
 module.exports = {
   singupValidation,
   loginValidation,
+  postValidation,
 };
