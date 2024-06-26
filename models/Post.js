@@ -1,9 +1,7 @@
-import mongoose, { Schema } from "mongoose";
-import { Post } from "../types";
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-interface IPost extends Document, Post {}
-
-const schema = new Schema<IPost>({
+const PostSchema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -11,6 +9,4 @@ const schema = new Schema<IPost>({
   isPublic: { type: Boolean, required: true, default: true },
 });
 
-const PostModel = mongoose.model<IPost>("Post", schema);
-
-export default PostModel;
+module.exports = mongoose.model("Post", PostSchema);
