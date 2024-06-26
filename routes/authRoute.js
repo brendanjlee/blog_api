@@ -1,23 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 
 const { login, signup } = require("../controllers/authController");
-const { userValidation } = require("../utils/validations");
+const { singupValidation, loginValidation } = require("../utils/validations");
+const auth = require("../middleware/authMiddleware");
 
-router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      msg: "You are successfully authenticated to this route!",
-    });
-  }
-);
+router.get("/protected", auth.authenticateJWT, (req, res, next) => {
+  res.status(200).json({
+    id: req.user._id,
+    success: true,
+    msg: "You are successfully authenticated to this route!",
+  });
+});
 
-router.post("/login", userValidation, login);
+router.post("/login", singupValidation, login);
 
-router.post("/signup", userValidation, signup);
+router.post("/signup", loginValidation, signup);
 
 module.exports = router;
