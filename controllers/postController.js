@@ -56,7 +56,7 @@ exports.createPost = asyncHanlder(async (req, res, next) => {
       isPublic: true,
     });
 
-    await newPost.save();
+    await postService.createPost(newPost);
 
     return res.status(200).json({
       success: true,
@@ -81,10 +81,7 @@ exports.updatePost = asyncHanlder(async (req, res, next) => {
   const updateData = req.body;
 
   try {
-    const post = await Post.findByIdAndUpdate(postId, updateData, {
-      new: true,
-      runValidators: true,
-    });
+    const post = await postService.updatePost(postId, updateData);
 
     if (!post) {
       return res
@@ -104,7 +101,7 @@ exports.updatePost = asyncHanlder(async (req, res, next) => {
 exports.deletePost = asyncHanlder(async (req, res, next) => {
   const postId = req.params.postId;
   try {
-    const result = postService.deletePost(postId);
+    const result = await postService.deletePost(postId);
 
     return res.status(200).json({ success: true, data: result });
   } catch (error) {

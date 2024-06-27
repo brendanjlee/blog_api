@@ -29,8 +29,16 @@ const postValidation = [
     .escape(),
 ];
 
+const commentValidation = [
+  body("content", "Content cannot be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+];
+
 module.exports = {
   singupValidation,
   loginValidation,
   postValidation,
+  commentValidation,
 };
