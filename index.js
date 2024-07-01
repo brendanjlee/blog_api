@@ -3,12 +3,14 @@ const cors = require("cors");
 const connectDB = require("./config/database");
 const routes = require("./routes/routes");
 const passport = require("passport");
+const morgan = require("morgan");
 
 const app = express();
 
 // set up middlewares
 app.use(cors());
 app.use(express.json());
+app.use(morgan("combined"));
 
 require("./config/passport");
 

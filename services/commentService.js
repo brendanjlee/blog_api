@@ -3,6 +3,7 @@ const Comment = require("../models/Comment");
 const getAllComments = async (postId) => {
   const comments = await Comment.find({ parentPost: postId })
     .sort({ postedDate: -1 })
+    .populate("author", "-salt -hash -email -__v")
     .exec();
 
   return comments;

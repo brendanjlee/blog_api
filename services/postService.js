@@ -2,12 +2,18 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 
 const getPostById = async (postId) => {
-  const post = await Post.findById(postId);
+  const post = await Post.findById(postId).populate(
+    "author",
+    "-salt -hash -email -__v"
+  );
   return post;
 };
 
 const getAllPosts = async (postId) => {
-  const posts = await Post.find().sort({ postedDate: -1 }).exec();
+  const posts = await Post.find()
+    .sort({ postedDate: -1 })
+    .populate("author", "-salt -hash -email -__v")
+    .exec();
 
   return posts;
 };
